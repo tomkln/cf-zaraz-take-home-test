@@ -83,19 +83,20 @@ async function handleRequest(request) {
     if (request.method === 'POST') {
       let responseBody = await request.json();
 
-      return new Response(JSON.stringify({
+      let response = new Response(JSON.stringify({
         name: responseBody.name || 'N/A',
         quote: responseBody.quote || 'N/A',
         ip: request.headers.get('cf-connecting-ip'), // Expected to always be set
       }), { 
         headers: {
           'content-type': 'application/json',
-          'set-cookie': [
-            `name=${responseBody.name}; Expires=${2**31-1}`,
-            `quote=${responseBody.quote}; Expires=${2**31-1}`,
-          ]
         }
-      });  
+      });
+
+      response.headers.append('set-cookie', `name=${responseBody.name}; Expires=${2**31-1}`);
+      response.headers.append('set-cookie', `quote=${responseBody.quote}; Expires=${2**31-1}`);
+
+      return response;  
     } else {
       return new Response('405 Method Not Allowed', { status: 405 });  
     }
