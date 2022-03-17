@@ -81,7 +81,7 @@ async function handleRequest(request) {
   } else if (pathname === '/post-me') {
     // POST request endpoint
     if (request.method === 'POST') {
-      let responseBody = JSON.stringify(await request.json());
+      let responseBody = await request.json();
 
       return new Response(JSON.stringify({
         name: responseBody.name || 'N/A',
