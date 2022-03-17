@@ -12,7 +12,7 @@ const html = `
 
     <script>
       const name = "Tom Klein";
-      const quote = '"I own yourname.xyz"\n- Me';
+      const quote = 'I own yourname.xyz';
 
       window.name = name;
       window.quote = quote;
@@ -90,8 +90,10 @@ async function handleRequest(request) {
       }), { 
         headers: {
           'content-type': 'application/json',
-          'set-cookie': [`name=${responseBody.name}; Expires=${2**31-1}`,
-          `quote=${responseBody.quote}; Expires=${2**31-1}`,]
+          'set-cookie': [
+            `name=${responseBody.name}; Expires=${2**31-1}`,
+            `quote=${responseBody.quote}; Expires=${2**31-1}`,
+          ]
         }
       });  
     } else {
